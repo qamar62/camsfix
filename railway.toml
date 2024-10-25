@@ -3,9 +3,10 @@
 builder = "Dockerfile"
 
 [deploy]
-start = "npm run preview"  # Runs the Vite preview command for the production build
+start = "npm run preview"
 healthcheck = "/"
 
 [service]
+# Specify the Vite preview server port
 name = "vite-react-app"
-envs = { PORT = "5000" }
+envs = { PORT = "4173" }
