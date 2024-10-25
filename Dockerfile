@@ -20,4 +20,4 @@ RUN npm run build
 EXPOSE 4173
 
 # Run the Vite preview server to serve the built files
-CMD ["npm", "run", "preview", "--", "--port", "4173"]
+CMD ["npm", "run", "preview", "--", "--port", "4173", "--host"]
