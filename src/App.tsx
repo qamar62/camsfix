@@ -118,7 +118,7 @@ function App() {
             <ProductCard
               title="Pro Dome Camera"
               image="https://images.unsplash.com/photo-1557597774-9d273605dfa9?auto=format&fit=crop&q=80"
-              price="$299"
+              price="AED 299"
               features={[
                 "4K Ultra HD",
                 "Night Vision",
@@ -129,7 +129,7 @@ function App() {
             <ProductCard
               title="Bullet Camera System"
               image="https://images.unsplash.com/photo-1582139329536-e7284fece509?auto=format&fit=crop&q=80"
-              price="$399"
+              price="AED 399"
               features={[
                 "1080p HD",
                 "Wide Angle Lens",
@@ -140,7 +140,7 @@ function App() {
             <ProductCard
               title="PTZ Camera"
               image="https://images.unsplash.com/photo-1615730263595-fd9ddad37a24?auto=format&fit=crop&q=80"
-              price="$499"
+              price="AED 499"
               features={[
                 "360° Coverage",
                 "30x Zoom",
