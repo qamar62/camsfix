@@ -1,13 +1,11 @@
+# railway.toml
 [build]
-builder = "Dockerfile"  # Specifies to use the Dockerfile provided
+builder = "Dockerfile"
 
 [deploy]
-# This sets the PORT environment variable Railway expects.
-start = "npm start"  
+start = "npm run preview"  # Runs the Vite preview command for the production build
 healthcheck = "/"
 
 [service]
-# The port your app is exposed on
-# Railway automatically sets the PORT environment variable, so use that for compatibility
-name = "node-app"
-envs = { PORT = "3000" }
+name = "vite-react-app"
+envs = { PORT = "5000" }
