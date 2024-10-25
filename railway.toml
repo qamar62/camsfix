@@ -1,9 +1,13 @@
 [build]
-builder = "DOCKERFILE"
-dockerfilePath = "./Dockerfile"
-watchPatterns = [
-    
-    "src/**", 
-    "railway.toml",
-    "Dockerfile",
-]
+builder = "Dockerfile"  # Specifies to use the Dockerfile provided
+
+[deploy]
+# This sets the PORT environment variable Railway expects.
+start = "npm start"  
+healthcheck = "/"
+
+[service]
+# The port your app is exposed on
+# Railway automatically sets the PORT environment variable, so use that for compatibility
+name = "node-app"
+envs = { PORT = "3000" }
