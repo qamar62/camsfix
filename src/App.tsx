@@ -4,13 +4,45 @@ import { Shield, Camera, Wrench, Phone, ChevronRight, Star, Sun, Moon } from 'lu
 import Navbar from './components/Navbar';
 import ProductCard from './components/ProductCard';
 import { useTheme } from './hooks/useTheme';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+
+interface Product {
+  id: number;
+  title: string;
+  description: string;
+  price: string;
+  image_url: string;
+  features: string[];
+  created_at: string;
+}
 
 function App() {
   const { isDark, toggleTheme } = useTheme();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/api/products');
+        if (!response.ok) {
+          throw new Error('Failed to fetch products');
+        }
+        const data = await response.json();
+        setProducts(data);
+        setLoading(false);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'An error occurred');
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -126,41 +158,23 @@ function App() {
       <section id="products" className="py-20 bg-gray-100 dark:bg-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-center mb-12 dark:text-white">Featured Products</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <ProductCard
-              title="Pro Dome Camera"
-              image="https://images.unsplash.com/photo-1557597774-9d273605dfa9?auto=format&fit=crop&q=80"
-              price="AED 299"
-              features={[
-                "4K Ultra HD",
-                "Night Vision",
-                "Motion Detection",
-                "Weather Resistant"
-              ]}
-            />
-            <ProductCard
-              title="Bullet Camera System"
-              image="https://images.unsplash.com/photo-1582139329536-e7284fece509?auto=format&fit=crop&q=80"
-              price="AED 399"
-              features={[
-                "1080p HD",
-                "Wide Angle Lens",
-                "Two-Way Audio",
-                "Smart Alerts"
-              ]}
-            />
-            <ProductCard
-              title="PTZ Camera"
-              image="https://images.unsplash.com/photo-1615730263595-fd9ddad37a24?auto=format&fit=crop&q=80"
-              price="AED 499"
-              features={[
-                "360° Coverage",
-                "30x Zoom",
-                "Auto Tracking",
-                "IP67 Rated"
-              ]}
-            />
-          </div>
+          {loading ? (
+            <div className="text-center text-gray-600 dark:text-gray-300">Loading products...</div>
+          ) : error ? (
+            <div className="text-center text-red-600 dark:text-red-400">{error}</div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {products.map((product) => (
+                <ProductCard
+                  key={product.id}
+                  title={product.title}
+                  image={product.image_url}
+                  price={product.price}
+                  features={product.features}
+                />
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
